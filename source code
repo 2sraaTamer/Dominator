@@ -1,0 +1,126 @@
+//first solution
+#include <iostream>
+#include <bits/stdc++.h>
+using namespace std;
+void merge(int *,int, int , int );
+void merge_sort(int *arr, int first, int last)
+{
+    int middle;
+    if (first < last){
+        middle=(first+last)/2;
+        merge_sort(arr,first,middle);
+        merge_sort(arr,middle+1,last);
+        merge(arr,first,last,middle);
+    }
+}
+// Merge sort
+void merge(int *arr, int first, int last, int middle)
+{
+    int i, j, k, c[50];
+    i = first;
+    k = first;
+    j = middle + 1;
+    while (i <= middle && j <= last) {
+        if (arr[i] < arr[j]) {
+            c[k] = arr[i];
+            k++;
+            i++;
+        }
+        else  {
+            c[k] = arr[j];
+            k++;
+            j++;
+        }
+    }
+    while (i <= middle) {
+        c[k] = arr[i];
+        k++;
+        i++;
+    }
+    while (j <= last) {
+        c[k] = arr[j];
+        k++;
+        j++;
+    }
+    for (i = first; i < k; i++)  {
+        arr[i] = c[i];
+    }
+}
+void dominant(int array[],int size){
+    int origin[size],count=1,dominant;
+    for(int i=0;i<size;i++)
+        origin[i]=array[i];
+    merge_sort(array, 0, size-1);
+    for (int i = 0; i <size; i++)
+    {
+        if(array[i]==array[i+1]){
+           count++;
+           if(count>size/2)
+              dominant=array[i];
+              }
+        }
+    if(count>size/2){
+
+        for(int i=0 ;i<size;i++){
+            if(dominant==origin[i])
+               cout<<i<<" ";
+           }
+
+    }
+    else
+        cout<<-1;
+
+}
+int main()
+{
+    int array[1000],size;
+    cout<<"Enter the size of array";
+    cin>>size;
+
+    for (int i = 0; i < size; i++) {
+        cout<<"A["<<i<<"] = ";
+        cin>>array[i];
+    }
+    dominant(array,size);
+    return 0;
+}
+
+//second solution
+#include <iostream>
+#include <bits/stdc++.h>
+using namespace std;
+ void dominant(int array[],int size){
+     int count=0,dominant=0;
+     for(int i=0;i<size;i++){
+         dominant=array[i];
+         for(int j=0;j<size;j++){
+             if(dominant==array[j]){
+                 count++;
+             }}
+     if(count<size/2)
+        count=0;
+     else{
+         break;
+     }
+         }
+     if(count==0)
+        cout<<-1;
+     if(count>size/2){
+         for(int i=0;i<size;i++){
+             if(dominant==array[i])
+                cout<<i<<" ";
+              }
+           }
+ }
+int main()
+{
+    int array[100],size;
+    cout<<"Enter size of array\n";
+    cin>>size;
+    for (int i = 0; i < size; i++) { 
+        cout<<"A["<<i<<"] = ";
+        cin>>array[i];
+    }
+    dominant(array,size);
+    return 0;
+}
